@@ -22,7 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LocationClient interface {
-	GetLocation(ctx context.Context, in *GetLocationRequest, opts ...grpc.CallOption) (*GetLocationResponse, error)
+	GetLocation(ctx context.Context, in *LocationRequest, opts ...grpc.CallOption) (*LocationResponse, error)
 }
 
 type locationClient struct {
@@ -33,8 +33,8 @@ func NewLocationClient(cc grpc.ClientConnInterface) LocationClient {
 	return &locationClient{cc}
 }
 
-func (c *locationClient) GetLocation(ctx context.Context, in *GetLocationRequest, opts ...grpc.CallOption) (*GetLocationResponse, error) {
-	out := new(GetLocationResponse)
+func (c *locationClient) GetLocation(ctx context.Context, in *LocationRequest, opts ...grpc.CallOption) (*LocationResponse, error) {
+	out := new(LocationResponse)
 	err := c.cc.Invoke(ctx, "/location.Location/GetLocation", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -46,7 +46,7 @@ func (c *locationClient) GetLocation(ctx context.Context, in *GetLocationRequest
 // All implementations must embed UnimplementedLocationServer
 // for forward compatibility
 type LocationServer interface {
-	GetLocation(context.Context, *GetLocationRequest) (*GetLocationResponse, error)
+	GetLocation(context.Context, *LocationRequest) (*LocationResponse, error)
 	mustEmbedUnimplementedLocationServer()
 }
 
@@ -54,7 +54,7 @@ type LocationServer interface {
 type UnimplementedLocationServer struct {
 }
 
-func (UnimplementedLocationServer) GetLocation(context.Context, *GetLocationRequest) (*GetLocationResponse, error) {
+func (UnimplementedLocationServer) GetLocation(context.Context, *LocationRequest) (*LocationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLocation not implemented")
 }
 func (UnimplementedLocationServer) mustEmbedUnimplementedLocationServer() {}
@@ -71,7 +71,7 @@ func RegisterLocationServer(s grpc.ServiceRegistrar, srv LocationServer) {
 }
 
 func _Location_GetLocation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetLocationRequest)
+	in := new(LocationRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -83,7 +83,7 @@ func _Location_GetLocation_Handler(srv interface{}, ctx context.Context, dec fun
 		FullMethod: "/location.Location/GetLocation",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LocationServer).GetLocation(ctx, req.(*GetLocationRequest))
+		return srv.(LocationServer).GetLocation(ctx, req.(*LocationRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
