@@ -1,4 +1,4 @@
-module github.com/yeahyeahcore/grpc_tutor
+module github.com/yeahyeahcore/grpc_tutor/api
 
 go 1.18
 
