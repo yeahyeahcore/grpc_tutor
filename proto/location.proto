@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package location;
+
+option go_package = "/api";
+
+service Location {
+  rpc GetLocation(GetLocationRequest) returns (GetLocationResponse) {}
+}
+
+message GetLocationRequest {
+  int32 courierId = 1;
+}
+
+message GetLocationResponse {
+  message Location {
+    float lat = 1;
+    float lng = 2;
+  }
+}
