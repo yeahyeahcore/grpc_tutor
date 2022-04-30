@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package proto;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "./proto";
+
+service Coordinates {
+  rpc PostCoordinate(Coordinate) returns (Coordinate);
+  rpc GetAllCoordinates(CoordinateRequest) returns (CoordinatesResponse);
+  rpc GetCurrentCoorinate(CoordinateRequest) returns (Coordinate);
+}
+
+message CoordinateRequest {
+  string CourierID = 1;
+}
+
+message CoordinatesResponse {
+  repeated Coordinate Coordinates = 1;
+}
+
+message Coordinate {
+  float Lat = 1;
+  float Lng = 2;
+  google.protobuf.Timestamp Timestamp = 3;
+}
